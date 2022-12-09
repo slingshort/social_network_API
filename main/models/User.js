@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const moment = require('moment');
 
+// user schema defines parent doc
 const UserSchema = new Schema ({
     username: {
         type: String,
@@ -12,17 +13,19 @@ const UserSchema = new Schema ({
         type: String,
         required: true,
         unique: true,
+        trim: true,
+        // mongoose matching validation TODO
     },
     thoughts: [
         {
             type: Schema.Types.ObjectId,
-            // references..
+            ref: 'Thought',
         }
     ],
     friends: [
         {
             type: Schema.Types.ObjectId,
-            // references
+            ref: 'Friend',
         }
     ]
 },
@@ -31,12 +34,10 @@ const UserSchema = new Schema ({
             virtuals: true
         },
         id: false
-    };
+    }
+);
 
 
+const User = model('User', UserSchema)
 
-
-
-
-
-)
+module.exports = User;
