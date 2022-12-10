@@ -1,6 +1,7 @@
 const { ObjectId } = require('bson');
 const {Schema, model} = require('mongoose');
-const userSchema = require('./User');
+const User = require('./User');
+const reaction = require('./Reaction')
 
 
 const thoughtSchema = new Schema(
@@ -17,15 +18,13 @@ const thoughtSchema = new Schema(
         username: {
             type: String,
             required: true,
+            ref: 'User'
         },
-        reactions: {
-            // TODO nested docs created with reaction schema
-        },
+        reactions: [reaction],
+
         meta: {
             reactions: Number,
         }
-        // TODO reaction count virtual
-
     },
     {
         toJSON: {
@@ -33,7 +32,6 @@ const thoughtSchema = new Schema(
         },
         id: false,
         // TODO getters?
-
       }
 );
 
@@ -41,29 +39,11 @@ thoughtSchema
     .virtual('reactionCount')
     //getter
     .get(function () {
-        return this.modifiedPaths.reactions;
+        return this.reactions.length;
     });
 
-const reactionSchema = new Schema(
-    {
-        reactionId: {
-            type: ObjectId,
-            // fix
-            default: Date.now,
-        },
-        username: {
-            type: String,
-            required: true,
-            ref: 'User'
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            // getter?
-        }
-    }
-)
+
 
 const Thought = model('Thought', thoughtSchema)
 
-module.export = Thought;
+module.exports = Thought;

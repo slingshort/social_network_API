@@ -1,8 +1,9 @@
 const { Schema, model } = require('mongoose');
 const moment = require('moment');
+const Thought = require('./Thought')
 
 // user schema defines parent doc
-const UserSchema = new Schema ({
+const userSchema = new Schema ({
     username: {
         type: String,
         unique: true,
@@ -25,7 +26,8 @@ const UserSchema = new Schema ({
     friends: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Friend',
+            ref: 'User',
+            // TODO fix
         }
     ]
 },
@@ -37,7 +39,13 @@ const UserSchema = new Schema ({
     }
 );
 
+// friendCount virtual
+userSchema
+    .virtual('friendCount')
+    .get(function () {
+        return this.friends.length
+    });
 
-const User = model('User', UserSchema)
+const User = model('User', userSchema)
 
 module.exports = User;
