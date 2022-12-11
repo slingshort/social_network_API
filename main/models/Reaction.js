@@ -22,7 +22,13 @@ const reactionSchema = new Schema(
             type: Date,
             default: Date.now,
             // getter TODO
-        }
+        },
+    },
+    {
+        toJSON: {
+            getters: true
+        },
+        id: false,
     }
 )
 

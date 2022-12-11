@@ -48,3 +48,5 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     }
 }
+
+// TODO add friend and delete friend
