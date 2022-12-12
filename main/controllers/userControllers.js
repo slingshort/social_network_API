@@ -83,4 +83,3 @@ module.exports = {
     },
 }
 
-// TODO add friend and delete friend
