@@ -3,7 +3,7 @@ const User = require('../models/User')
 module.exports = {
   getUsers(req, res) {
     User.find()
-      .then((userData) => res.json(userData))
+      .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
 
@@ -60,7 +60,7 @@ module.exports = {
         !user
           ? res
             .status(404)
-            .json({ message: 'No user found with that ID :(' })
+            .json({ message: 'No user found with that ID' })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -76,7 +76,7 @@ module.exports = {
         !user
           ? res
             .status(404)
-            .json({ message: 'No user found with that ID :(' })
+            .json({ message: 'No user found with that ID' })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
