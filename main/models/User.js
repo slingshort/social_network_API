@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson');
 const { Schema, model } = require('mongoose');
 const moment = require('moment');
 const Thought = require('./Thought')
@@ -33,7 +34,8 @@ const userSchema = new Schema ({
 },
     {
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            getters: true
         },
         id: false
     }
